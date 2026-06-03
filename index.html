@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>银发经济 · 乐享晚年品质生活</title>
+    <style>
+        :root {
+            --primary: #C1784B;
+            --primary-dark: #A05E35;
+            --primary-light: #F5E6D8;
+            --secondary: #4A7C8C;
+            --accent: #E8B44F;
+            --bg: #FDF8F4;
+            --bg-white: #FFFFFF;
+            --text: #3D322B;
+            --text-light: #6B5F56;
+            --text-muted: #9B8E84;
+            --border: #E8DDD4;
+            --shadow-sm: 0 2px 8px rgba(61, 50, 43, 0.06);
+            --shadow: 0 4px 20px rgba(61, 50, 43, 0.08);
+            --shadow-lg: 0 12px 40px rgba(61, 50, 43, 0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --font-xl: 1.25rem;
+            --font-lg: 1.125rem;
+            --font-base: 1.05rem;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 17px;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .navbar.scrolled { box-shadow: var(--shadow); }
+
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: var(--font-lg);
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .nav-links a:hover { background: var(--primary-light); color: var(--primary); }
+
+        .nav-btn {
+            background: var(--primary);
+            color: #fff !important;
+            padding: 10px 24px !important;
+            border-radius: 24px !important;
+            font-weight: 600 !important;
+            transition: var(--transition);
+        }
+        .nav-btn:hover {
+            background: var(--primary-dark) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(193, 120, 75, 0.35);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2.5px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ===== Hero ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 32px 80px;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 40%, rgba(193,120,75,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 80% 70%, rgba(74,124,140,0.06) 0%, transparent 70%),
+                var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(232,180,79,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(193,120,75,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 8px 22px;
+            border-radius: 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+        }
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 800;
+            line-height: 1.25;
+            color: var(--text);
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), #D4925A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: var(--font-xl);
+            color: var(--text-light);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 32px;
+            font-size: var(--font-lg);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(193, 120, 75, 0.3);
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(193, 120, 75, 0.4); }
+        .btn-outline {
+            background: var(--bg-white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-outline:hover { background: var(--primary-light); transform: translateY(-2px); }
+
+        /* ===== Stats Strip ===== */
+        .stats-strip {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            padding: 40px 32px;
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+        .stat-label { font-size: 0.95rem; color: var(--text-muted); margin-top: 4px; }
+
+        /* ===== Section Common ===== */
+        section { padding: 90px 32px; }
+        .section-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+        .section-tag {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+        .section-header h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        .section-header p {
+            font-size: var(--font-lg);
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* ===== Services Grid ===== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+        }
+        .service-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 36px 32px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        .service-icon.care { background: #FFF0E8; }
+        .service-icon.health { background: #E8F4F8; }
+        .service-icon.tech { background: #F0E8FF; }
+        .service-icon.travel { background: #FFF8E1; }
+        .service-icon.finance { background: #E8F8EC; }
+        .service-icon.edu { background: #FFE8EC; }
+
+        .service-card h3 { font-size: var(--font-xl); font-weight: 700; margin-bottom: 10px; color: var(--text); }
+        .service-card p { font-size: var(--font-base); color: var(--text-light); line-height: 1.7; }
+        .service-card .learn-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .service-card .learn-more:hover { gap: 10px; }
+
+        /* ===== Products ===== */
+        .products-bg { background: var(--bg-white); }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .product-card {
+            background: var(--bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+        .product-img {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+        }
+        .product-img.watch { background: linear-gradient(135deg, #E8F4F8, #D0E8F4); }
+        .product-img.bed { background: linear-gradient(135deg, #FFF0E8, #FFE0D0); }
+        .product-img.phone { background: linear-gradient(135deg, #F0E8FF, #E0D0FF); }
+        .product-img.band { background: linear-gradient(135deg, #E8F8EC, #D0ECD8); }
+
+        .product-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--primary);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .product-body { padding: 22px 20px; }
+        .product-body h3 { font-size: var(--font-lg); font-weight: 700; margin-bottom: 8px; }
+        .product-body p { font-size: 0.95rem; color: var(--text-light); margin-bottom: 14px; }
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .product-price { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+        .product-price small { font-size: 0.8rem; font-weight: 400; color: var(--text-muted); }
+        .product-cart {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .product-cart:hover { background: var(--primary-dark); }
+
+        /* ===== Features ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+        .feature-card {
+            text-align: center;
+            padding: 36px 24px;
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .feature-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 18px;
+            display: block;
+        }
+        .feature-card h3 { font-size: var(--font-lg); font-weight: 700; margin-bottom: 8px; }
+        .feature-card p { font-size: 0.95rem; color: var(--text-light); }
+
+        /* ===== Founder ===== */
+        .founder-bg { background: var(--bg-white); }
+
+        .founder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: center;
+        }
+        .founder-photo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .founder-avatar {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(135deg, var(--primary-light), #FFE8D6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 0 0 0 12px rgba(193,120,75,0.08), 0 0 0 24px rgba(193,120,75,0.04);
+            position: relative;
+        }
+        .founder-avatar::after {
+            content: '"';
+            position: absolute;
+            bottom: -10px;
+            right: 10px;
+            font-size: 5rem;
+            color: var(--primary);
+            font-family: Georgia, serif;
+            opacity: 0.3;
+        }
+        .founder-info .section-tag { margin-bottom: 16px; }
+        .founder-info h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        .founder-title {
+            font-size: var(--font-lg);
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .founder-quote {
+            font-size: var(--font-xl);
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 24px;
+            padding-left: 20px;
+            border-left: 3px solid var(--primary);
+            font-style: italic;
+        }
+        .founder-story {
+            font-size: var(--font-base);
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .founder-signature {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            font-family: "KaiTi", "STKaiti", "楷体", serif;
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), #D4925A);
+            text-align: center;
+            color: #fff;
+            padding: 80px 32px;
+        }
+        .cta h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 700; margin-bottom: 16px; }
+        .cta p { font-size: var(--font-lg); opacity: 0.9; max-width: 600px; margin: 0 auto 32px; }
+        .cta .btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.6); }
+        .cta .btn-outline:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
+        .cta .btn-primary { background: #fff; color: var(--primary); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+        .cta .btn-primary:hover { background: #FFF5EE; }
+
+        /* ===== Testimonials ===== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .testimonial-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+        .testimonial-stars { color: var(--accent); font-size: 1.2rem; margin-bottom: 12px; letter-spacing: 2px; }
+        .testimonial-card > p { font-size: var(--font-base); color: var(--text-light); margin-bottom: 18px; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .ta-1 { background: #C1784B; }
+        .ta-2 { background: #4A7C8C; }
+        .ta-3 { background: #8B6BAE; }
+        .author-name { font-weight: 700; font-size: 0.95rem; }
+        .author-role { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* ===== Contact ===== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .contact-info h2 { font-size: 2rem; font-weight: 700; margin-bottom: 16px; }
+        .contact-info > p { font-size: var(--font-lg); color: var(--text-light); margin-bottom: 32px; }
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 20px;
+            font-size: var(--font-base);
+        }
+        .contact-item .ci-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+        .contact-item strong { display: block; color: var(--text); margin-bottom: 2px; }
+
+        .contact-form {
+            background: var(--bg-white);
+            padding: 36px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-xs);
+            font-size: var(--font-base);
+            font-family: inherit;
+            transition: var(--transition);
+            background: var(--bg);
+            color: var(--text);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(193, 120, 75, 0.1);
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+
+        /* ===== Footer ===== */
+        footer {
+            background: #2C231D;
+            color: #C8BFB6;
+            padding: 56px 32px 28px;
+        }
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 36px;
+            margin-bottom: 40px;
+        }
+        .footer-col h4 { color: #fff; font-size: var(--font-lg); font-weight: 700; margin-bottom: 16px; }
+        .footer-col p, .footer-col a { font-size: 0.95rem; color: #A89D94; line-height: 2; }
+        .footer-col a { text-decoration: none; display: block; transition: var(--transition); }
+        .footer-col a:hover { color: var(--primary); }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 24px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #8A7E74;
+        }
+
+        /* ===== Back to Top ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--primary-dark); transform: translateY(-3px); }
+
+        /* ===== Mobile Menu ===== */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(12px);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a {
+            font-size: 1.3rem;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        .mobile-menu a:hover { background: var(--primary-light); color: var(--primary); }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .founder-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+            .founder-avatar { width: 220px; height: 220px; font-size: 4rem; }
+            .founder-quote { padding-left: 0; border-left: none; }
+            .hero { min-height: auto; padding: 100px 24px 60px; }
+            section { padding: 60px 20px; }
+            .stats-strip { gap: 24px; }
+            .stat-number { font-size: 1.6rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
+            .services-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .founder-grid { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+            .founder-avatar { width: 200px; height: 200px; font-size: 3.5rem; }
+            .founder-quote { padding-left: 0; border-left: none; }
+            .founder-photo { order: -1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar" id="navbar">
+    <div class="nav-inner">
+        <a href="#" class="logo">
+            <span class="logo-icon">🌿</span>
+            银发乐龄
+        </a>
+        <ul class="nav-links">
+            <li><a href="#services">养老服务</a></li>
+            <li><a href="#products">智能产品</a></li>
+            <li><a href="#features">核心优势</a></li>
+            <li><a href="#founder">创始人</a></li>
+            <li><a href="#testimonials">用户心声</a></li>
+            <li><a href="#contact" class="nav-btn">立即咨询</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== Mobile Menu ===== -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#services" onclick="closeMenu()">养老服务</a>
+    <a href="#products" onclick="closeMenu()">智能产品</a>
+    <a href="#features" onclick="closeMenu()">核心优势</a>
+    <a href="#founder" onclick="closeMenu()">创始人</a>
+    <a href="#testimonials" onclick="closeMenu()">用户心声</a>
+    <a href="#contact" onclick="closeMenu()">立即咨询</a>
+</div>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-badge">🏆 服务超过 500,000 个家庭</span>
+        <h1>用心守护<span class="highlight">银发时光</span><br>让晚年生活更有温度</h1>
+        <p>整合养老照护、健康管理、智能科技、文娱旅居等一站式服务，为长辈打造安全、舒适、有尊严的品质晚年。</p>
+        <div class="hero-buttons">
+            <a href="#services" class="btn btn-primary">🔍 了解我们的服务</a>
+            <a href="#contact" class="btn btn-outline">📞 免费咨询热线</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Stats ===== -->
+<div class="stats-strip">
+    <div class="stat-item">
+        <div class="stat-number">500,000<span style="font-size:1rem;">+</span></div>
+        <div class="stat-label">服务家庭</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">128</div>
+        <div class="stat-label">覆盖城市</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">3,200<span style="font-size:1rem;">+</span></div>
+        <div class="stat-label">专业护理团队</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">98.6<span style="font-size:1rem;">%</span></div>
+        <div class="stat-label">满意度评价</div>
+    </div>
+</div>
+
+<!-- ===== Services ===== -->
+<section id="services">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">我们的服务</span>
+            <h2>全方位银发生活解决方案</h2>
+            <p>从居家养老到社区照料，从健康管理到精神陪伴，我们提供覆盖银发生活全场景的专业服务。</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon care">🤲</div>
+                <h3>居家养老服务</h3>
+                <p>提供上门护理、日间照料、助浴助餐、康复理疗等个性化居家养老服务，让长辈安享家中温馨时光。</p>
+                <a href="#" class="learn-more">了解详情 →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon health">💚</div>
+                <h3>健康管理服务</h3>
+                <p>建立个人健康档案，提供慢病管理、定期体检、用药提醒、远程问诊等全周期健康守护方案。</p>
+                <a href="#" class="learn-more">了解详情 →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon tech">🤖</div>
+                <h3>智慧养老科技</h3>
+                <p>智能穿戴设备、跌倒监测、紧急呼叫、AI陪伴机器人等科技产品，为长辈安全保驾护航。</p>
+                <a href="#" class="learn-more">了解详情 →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon travel">✈️</div>
+                <h3>银发旅居服务</h3>
+                <p>专为老年人设计的慢节奏旅游线路、康养旅居基地、老年游学项目，让晚年生活精彩纷呈。</p>
+                <a href="#" class="learn-more">了解详情 →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon finance">💰</div>
+                <h3>养老金融服务</h3>
+                <p>提供养老金规划、以房养老咨询、长期护理保险、适老理财产品等综合养老金融解决方案。</p>
+                <a href="#" class="learn-more">了解详情 →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon edu">📚</div>
+                <h3>老年教育与社交</h3>
+                <p>开设智能手机培训、书画舞蹈、养生课堂等兴趣课程，搭建老年社交平台，丰富精神文化生活。</p>
+                <a href="#" class="learn-more">了解详情 →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Products ===== -->
+<section id="products" class="products-bg">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">智能产品</span>
+            <h2>科技赋能 · 智慧养老好物推荐</h2>
+            <p>精选适老化智能产品，操作简单、安全可靠，让科技真正服务于银发生活。</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-img watch">
+                    <span class="product-badge">🔥 热销</span>
+                    ⌚
+                </div>
+                <div class="product-body">
+                    <h3>智能健康手表</h3>
+                    <p>心率血氧监测 | GPS定位 | 跌倒自动报警 | SOS一键求救</p>
+                    <div class="product-footer">
+                        <span class="product-price">¥899 <small>起</small></span>
+                        <button class="product-cart" onclick="alert('已加入咨询清单，客服稍后联系您！')">了解详情</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img bed">
+                    <span class="product-badge">⭐ 新品</span>
+                    🛏️
+                </div>
+                <div class="product-body">
+                    <h3>智能护理床</h3>
+                    <p>电动升降起背 | 自动翻身 | 生命体征监测 | 语音控制</p>
+                    <div class="product-footer">
+                        <span class="product-price">¥5,980 <small>起</small></span>
+                        <button class="product-cart" onclick="alert('已加入咨询清单，客服稍后联系您！')">了解详情</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img phone">
+                    <span class="product-badge">👍 推荐</span>
+                    📱
+                </div>
+                <div class="product-body">
+                    <h3>适老智能手机</h3>
+                    <p>大字体大图标 | 语音播报 | 远程协助 | 简易操作界面</p>
+                    <div class="product-footer">
+                        <span class="product-price">¥1,299 <small>起</small></span>
+                        <button class="product-cart" onclick="alert('已加入咨询清单，客服稍后联系您！')">了解详情</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img band">
+                    <span class="product-badge">✨ 精选</span>
+                    🩺
+                </div>
+                <div class="product-body">
+                    <h3>家用健康监测套装</h3>
+                    <p>血压血糖一体机 | 数据云端同步 | 异常预警 | 子女端APP查看</p>
+                    <div class="product-footer">
+                        <span class="product-price">¥1,580 <small>起</small></span>
+                        <button class="product-cart" onclick="alert('已加入咨询清单，客服稍后联系您！')">了解详情</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Features ===== -->
+<section id="features">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">核心优势</span>
+            <h2>为什么选择银发乐龄？</h2>
+            <p>我们始终以长辈需求为中心，打造值得信赖的银发经济服务品牌。</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">👨‍⚕️</span>
+                <h3>专业资质认证</h3>
+                <p>所有护理人员持证上岗，团队含执业医师、康复治疗师、营养师等专业人才。</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🛡️</span>
+                <h3>安全保障体系</h3>
+                <p>24小时应急响应机制，智能监测+人工巡检双保险，紧急情况15分钟内响应。</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💝</span>
+                <h3>个性化定制方案</h3>
+                <p>一对一评估长辈身体状况与生活习惯，量身定制专属养老照护方案。</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📊</span>
+                <h3>数字化管理平台</h3>
+                <p>子女可通过APP实时查看长辈健康数据、服务记录，远程关爱零距离。</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🤝</span>
+                <h3>政企合作背景</h3>
+                <p>与多地政府合作社区养老项目，参与国家级智慧养老示范工程。</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🌍</span>
+                <h3>全国服务网络</h3>
+                <p>覆盖128座城市，300+社区服务站，无论城乡都能享受优质养老服务。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Founder ===== -->
+<section id="founder" class="founder-bg">
+    <div class="container">
+        <div class="founder-grid">
+            <div class="founder-photo">
+                <div class="founder-avatar">🧓</div>
+            </div>
+            <div class="founder-info">
+                <span class="section-tag">创始人故事</span>
+                <h2>萧乐轩</h2>
+                <div class="founder-title">银发乐龄创始人 & CEO</div>
+                <div class="founder-quote">
+                    "每一位长者都是一本厚重的书，值得我们用心品读。<br>让银发岁月不仅有温度，更有尊严。"
+                </div>
+                <p class="founder-story">
+                    萧乐轩先生深耕养老服务行业十余年，曾先后走访日本、北欧等多地考察先进养老模式。
+                    2018年创办银发乐龄，立志打造适合中国家庭的"有温度的养老服务"。
+                    从最初5人的小团队，发展到如今3,200余名专业护理人员、覆盖128座城市的行业标杆，
+                    萧乐轩始终坚守初心——<strong>让每一位中国老人都能享受有品质、有尊严的晚年生活。</strong>
+                </p>
+                <p class="founder-story">
+                    在他的带领下，银发乐龄首创"智慧养老+人文关怀"双轮驱动模式，
+                    获得多项国家级智慧养老示范项目认定，并连续三年荣获"中国养老行业卓越品牌"称号。
+                </p>
+                <div class="founder-signature">—— 萧乐轩</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta">
+    <div class="container">
+        <h2>🎉 限时福利 · 新用户专享</h2>
+        <p>即日起至6月30日，新用户可享首次服务8折优惠 + 免费健康评估一次！</p>
+        <div class="hero-buttons" style="margin-top:8px;">
+            <a href="#contact" class="btn btn-primary">🎁 立即领取福利</a>
+            <a href="tel:400-888-9999" class="btn btn-outline">📞 400-888-9999</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Testimonials ===== -->
+<section id="testimonials">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">用户心声</span>
+            <h2>超过50万家庭的信赖之选</h2>
+            <p>听听他们与银发乐龄的真实故事。</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p>"自从给父亲配了智能手表，我在外地工作安心多了。上次父亲心率异常，系统立刻通知我和社区服务站，护理人员10分钟就上门了，真的太感谢了！"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar ta-1">张</div>
+                    <div>
+                        <div class="author-name">张女士</div>
+                        <div class="author-role">深圳 · 父亲82岁</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p>"退休后参加了银发乐龄的旅居项目，去了云南大理和广西巴马，行程节奏很舒适，随队还有医生陪同。结识了不少同龄朋友，生活比以前丰富多了！"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar ta-2">李</div>
+                    <div>
+                        <div class="author-name">李叔叔</div>
+                        <div class="author-role">杭州 · 退休教师 68岁</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p>"妈妈中风后需要长期康复护理，银发乐龄的康复师每周上门三次，还教会了我们家属日常护理技巧。妈妈现在能扶着走几步了，全家都很感动。"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar ta-3">王</div>
+                    <div>
+                        <div class="author-name">王女士</div>
+                        <div class="author-role">成都 · 母亲76岁</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Contact ===== -->
+<section id="contact">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <span class="section-tag">联系我们</span>
+                <h2>为您和家人的<br>银发生活保驾护航</h2>
+                <p>留下联系方式，我们的养老顾问将在24小时内与您联系，为您量身定制专属方案。</p>
+                <div class="contact-item">
+                    <span class="ci-icon">📞</span>
+                    <div>
+                        <strong>服务热线</strong>
+                        400-888-9999（7×24小时）
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="ci-icon">📧</span>
+                    <div>
+                        <strong>电子邮箱</strong>
+                        service@silverlife.cn
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="ci-icon">📍</span>
+                    <div>
+                        <strong>总部地址</strong>
+                        北京市朝阳区银发科技大厦18层
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="ci-icon">🕐</span>
+                    <div>
+                        <strong>服务时间</strong>
+                        周一至周日 8:00-22:00
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">您的姓名 *</label>
+                        <input type="text" id="name" placeholder="请输入您的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">联系电话 *</label>
+                        <input type="tel" id="phone" placeholder="请输入您的手机号码" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="relation">您与长者的关系</label>
+                        <select id="relation">
+                            <option value="">请选择</option>
+                            <option value="self">本人</option>
+                            <option value="child">子女</option>
+                            <option value="spouse">配偶</option>
+                            <option value="other">其他亲属</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">您感兴趣的服务</label>
+                        <select id="interest">
+                            <option value="">请选择（可多选，按住Ctrl选择）</option>
+                            <option value="home-care">居家养老服务</option>
+                            <option value="health">健康管理服务</option>
+                            <option value="smart-device">智慧养老产品</option>
+                            <option value="travel">银发旅居服务</option>
+                            <option value="finance">养老金融服务</option>
+                            <option value="education">老年教育与社交</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">留言（选填）</label>
+                        <textarea id="message" placeholder="请描述您或家人的具体情况和需求，以便我们提供更精准的服务建议..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">📩 提交咨询</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>🌿 银发乐龄</h4>
+            <p>用心守护每一位长辈的银发时光，<br>让晚年生活更有温度、有尊严。</p>
+            <p style="margin-top:12px;">创始人：<strong style="color:#D4C4B2;">萧乐轩</strong></p>
+        </div>
+        <div class="footer-col">
+            <h4>快速导航</h4>
+            <a href="#services">养老服务</a>
+            <a href="#products">智能产品</a>
+            <a href="#features">核心优势</a>
+            <a href="#testimonials">用户心声</a>
+        </div>
+        <div class="footer-col">
+            <h4>服务支持</h4>
+            <a href="#">常见问题</a>
+            <a href="#">服务流程</a>
+            <a href="#">加入我们</a>
+            <a href="#">合作伙伴</a>
+        </div>
+        <div class="footer-col">
+            <h4>关注我们</h4>
+            <a href="#">微信公众号：银发乐龄</a>
+            <a href="#">抖音号：银发乐龄生活</a>
+            <a href="#">小红书：银发乐龄</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 银发乐龄 SilverLife. 保留所有权利 &nbsp;|&nbsp; 京ICP备2024XXXXXXXX号 &nbsp;|&nbsp; 增值电信业务经营许可证
+    </div>
+</footer>
+
+<!-- ===== Back to Top ===== -->
+<button class="back-to-top" id="backToTop" title="返回顶部" onclick="scrollToTop()">↑</button>
+
+<script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    // Form submission
+    function handleSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        if (name && phone) {
+            alert(`感谢 ${name} 的咨询！\n\n我们的养老顾问将在24小时内与您联系（${phone}），请保持电话畅通。\n\n如有紧急需求，请直接拨打 400-888-9999。`);
+            e.target.reset();
+        }
+    }
+
+    // Smooth scroll for all anchor links (fallback for older browsers)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                const offset = navbar.offsetHeight + 16;
+                const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Animate stats counter on scroll
+    const stats = document.querySelectorAll('.stat-number');
+    const observerOptions = { threshold: 0.5 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    stats.forEach(stat => observer.observe(stat));
+</script>
+
+</body>
+</html>
